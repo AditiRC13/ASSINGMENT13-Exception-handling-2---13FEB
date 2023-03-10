@@ -1,0 +1,98 @@
+Q1. Explain why we have to use the Exception class while creating a Custom Exception.
+#Exceptions need to be derived from the Exception class, either directly or indirectly.
+
+#Instead of creating own exception class from scratch it's better to inherit all the feature available in the parent Exception class
+
+#When creating a custom exception in Python, it is best practice to inherit from the built-in Exception class or one of its subclasses. This is because the Exception class provides a standard interface and behavior for exceptions, and includes many helpful methods and attributes for handling and reporting errors
+
+Q2. Write a python program to print Python Exception Hierarchy.
+For printing the tree hierarchy we will use inspect module in Python. The inspect module provides useful functions to get information about objects such as modules, classes, methods, functions,  and code objects. For example, it can help you examine the contents of a class, extract and format the argument list for a function.
+
+For building a tree hierarchy we will use inspect.getclasstree().
+
+inspect.getclasstree() arranges the given list of classes into a hierarchy of nested lists. Where a nested list appears, it contains classes derived from the class whose entry immediately precedes the list.
+
+# import inspect module
+import inspect
+  
+# our treeClass function
+def treeClass(cls, ind = 0):
+    
+    # print name of the class
+    print ('-' * ind, cls.__name__)
+      
+    # iterating through subclasses
+    for i in cls.__subclasses__():
+        treeClass(i, ind + 3)
+  
+print("Hierarchy for Built-in exceptions is : ")
+  
+# inspect.getmro() Return a tuple 
+# of class  cls’s base classes.
+  
+# building a tree hierarchy 
+inspect.getclasstree(inspect.getmro(BaseException))
+
+# function call
+treeClass(BaseException)
+
+Q3. What errors are defined in the ArithmeticError class? Explain any two with an example.
+The ArithmeticError Exception is the base class for all errors associated with arithmetic operation.
+
+ArithmeticError
+--> ZeroDivisionError
+--> OverflowError
+--> FloatingPointError
+
+#Handling ZeroDivisionError
+try:
+    1/0
+except ArithmeticError as e:
+    print(f"{e}, {e.__class__}")
+    
+#Handling OverflowError
+j = 5.0
+
+try:
+    for i in range(1, 1000):
+        j = j**i
+except ArithmeticError as e:
+    print(f"{e}, {e.__class__}")
+    
+Q4. Why LookupError class is used? Explain with an example KeyError and IndexError.
+lookupError Exception is the Base class for errors raised when something can’t be found. The base class for the exceptions that are raised when a key or index used on a mapping or sequence is invalid: IndexError, KeyError.
+
+#An IndexError is raised when a sequence reference is out of range.
+import sys
+try:
+foo = [a, s, d, f, g]
+print foo[5]
+except IndexError as e:
+print e
+print sys.exc_type
+
+#A KeyError is raised when a value is not found as a key of a dictionary. The given code is rewritten as follows to catch the exception and find its type.
+import sys
+try:
+s = {'a':5, 'b':7}['c']
+
+except:
+print (sys.exc_info())
+
+Q5. Explain ImportError. What is ModuleNotFoundError?
+#The ImportError is raised when Python has problems with a successful import in module or member of a module. Typically, such a problem is due to an invalid or incorrect path, which will raise a ModuleNotFoundError
+
+#It may occur due to -
+*Module name not found
+*Circular import
+
+#ModuleNotFoundError
+This error occurs when you're trying to access or use a module that cannot be found
+
+Q6. List down some best practices for exception handling in python.
+
+*Always use specific exception
+*Print always a valid msg
+*Always avoid to write a multiple exception handling
+*Always try to log the error
+*Prepare a proper documnetation
